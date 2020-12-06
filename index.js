@@ -41,13 +41,22 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(getFinals) {
-    const getYears = getFinals.map(function(item) {
-        return item.Year;
+function getYears(dataset, callback) {
+    let finalsArray = getFinals(dataset);
+
+    let yearsArray = dataset.map(item => {
+        let year = 0;
+        if (item ["Year"] !== undefined) {
+            year = item["Year"]
+        }
+        return year;
     })
-    return getYears;
+    return yearsArray;
 }
-console.log(getYears(getFinals, fifaData))
+
+var result = getYears(fifaData, getFinals);
+
+console.log(result);
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function getWinners to do the following:  
 1. Receives an array
@@ -55,18 +64,24 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(cb) {
-    const winners = cb.map(function(item) {
-        if(item["Home Team Goals"] > ["Away Team Goals"]) {
-            return (item["Home Team Name"])
-        } else {
-            return (item ["Away Team Name"])
-        }
+function getWinners(dataset, getFinals) {
+    let finalsArray = getFinals(dataset);
+
+    let winners = finalsArray.map( item => {
+        if (item["Home Team Goals"] > item["Away Team Goals"]) {
+            return item["Home Team Name"];
+        } else if (
+            item["Home Team Goals"] < item ["Away Team Goals"]) {
+                return item ["Away Team Name"]
+            }
     });
-    return winners
+
+    return winners;
 }
 
-console.log(getWinners(getFinals(fifaData)));
+var result = getWinners(fifaData, getFinals)
+
+console.log(result);
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
